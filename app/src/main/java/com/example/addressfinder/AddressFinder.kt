@@ -27,7 +27,7 @@ class AddressFinder: Activity() {
         const val ZIPCODE = "zipcode"
 
         private var launcher: ActivityResultLauncher<Bundle>? = null
-        private val contract: ActivityResultContract<Bundle, Bundle> = object: ActivityResultContract<Bundle, Bundle>(){
+        private val contract: ActivityResultContract<Bundle, Bundle> get() = object: ActivityResultContract<Bundle, Bundle>(){
             override fun createIntent(context: Context, input: Bundle): Intent = Intent(ACTION)
             override fun parseResult(resultCode: Int, intent: Intent?): Bundle =
                 when (resultCode) {
@@ -104,9 +104,7 @@ class AddressFinder: Activity() {
             // Asset 에 있는 HTML 을 돌리기 위해서는 WebViewAssetLoader 가 필요하다.
             // 해당 클래스는 androidx.webkit:webkit:1.8.0 을 사용하면 쓸 수 있다.
             val assetLoader = WebViewAssetLoader.Builder()
-                .addPathHandler("/assets/",
-                    WebViewAssetLoader.AssetsPathHandler(this@AddressFinder)
-                )
+                .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(this@AddressFinder))
                 .setDomain(DOMAIN)
                 .build()
 
