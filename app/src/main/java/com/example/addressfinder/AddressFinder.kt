@@ -22,6 +22,7 @@ class AddressFinder: Activity() {
 
         private const val JS_BRIDGE = "address_finder" // Javascript 와 통신하기 위한 브릿지 프로토콜
         private const val DOMAIN = "address.finder.net" // 로컬 가상 도메인
+        private const val PATH = "assets"
 
         const val ADDRESS = "address"
         const val ZIPCODE = "zipcode"
@@ -104,14 +105,14 @@ class AddressFinder: Activity() {
             // Asset 에 있는 HTML 을 돌리기 위해서는 WebViewAssetLoader 가 필요하다.
             // 해당 클래스는 androidx.webkit:webkit:1.8.0 을 사용하면 쓸 수 있다.
             val assetLoader = WebViewAssetLoader.Builder()
-                .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(this@AddressFinder))
+                .addPathHandler("/${PATH}/", WebViewAssetLoader.AssetsPathHandler(this@AddressFinder))
                 .setDomain(DOMAIN)
                 .build()
 
             webViewClient = FileWebViewClient(assetLoader)
         }
 
-        webView.loadUrl("https://${DOMAIN}/assets/html/address.html")
+        webView.loadUrl("https://${DOMAIN}/${PATH}/html/address.html")
     }
 
     private class FileWebViewClient(private val assetLoader: WebViewAssetLoader): WebViewClientCompat() {
